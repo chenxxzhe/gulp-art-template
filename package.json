@@ -1,6 +1,6 @@
 {
     "name": "gulp-art-template4",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A plugin for Gulp that parses art-template template files",
     "keywords": [
         "gulpplugin",

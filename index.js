@@ -8,7 +8,12 @@ var Buffer = require('safe-buffer').Buffer;
 module.exports = function(data, options, settings) {
     data = data || {};
     options = assign({
-        minimize: true
+        minimize: false,
+        cache: false,
+        include: function(filename, includeData, includeBlock, includeOptions) {
+            includeData = assign({}, includeData, data);
+            return template.defaults.include(filename, includeData, includeBlock, includeOptions);
+        }
     }, options);
     settings = settings || {};
     return through.obj(function(file, enc, cb) {
