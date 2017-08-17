@@ -1,13 +1,13 @@
 {
-    "name": "gulp-art-template",
+    "name": "gulp-art-template4",
     "version": "1.0.0",
     "description": "A plugin for Gulp that parses art-template template files",
     "keywords": [
         "gulpplugin",
         "gulp"
     ],
-    "homepage": "",
-    "bugs": "",
+    "homepage": "https://github.com/zqjimlove/gulp-art-template",
+    "bugs": "https://github.com/zqjimlove/gulp-art-template/issues",
     "author": {
         "name": "Jim Woo",
         "email": "",
