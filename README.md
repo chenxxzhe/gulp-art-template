@@ -5,7 +5,7 @@ A plugin for Gulp that parses art-template template files, forked from https://g
 ## install
 
 ```
-npm i gulp-art-template4 -D
+npm i gulp-art-template4-enhanced -D
 ```
 
 ## gulpfile.js
