@@ -1,22 +1,22 @@
 {
-    "name": "gulp-art-template4",
+    "name": "gulp-arttemplate",
     "version": "1.0.1",
-    "description": "A plugin for Gulp that parses art-template template files",
+    "description": "A plugin for Gulp that parses art-template template files, forked from https://github.com/zqjimlove/gulp-art-template",
     "keywords": [
         "gulpplugin",
         "gulp"
     ],
-    "homepage": "https://github.com/zqjimlove/gulp-art-template",
-    "bugs": "https://github.com/zqjimlove/gulp-art-template/issues",
+    "homepage": "https://github.com/chenxxzhe/gulp-art-template",
+    "bugs": "https://github.com/chenxxzhe/gulp-art-template/issues",
     "author": {
-        "name": "Jim Woo",
+        "name": "chen zhe",
         "email": "",
-        "url": "https://github.com/zqjimlove"
+        "url": "https://github.com/chenxxzhe"
     },
     "main": "./index.js",
     "repository": {
         "type": "git",
-        "url": "git://github.com/rogeriopvl/gulp-ejs.git"
+        "url": "https://github.com/chenxxzhe/gulp-art-template"
     },
     "scripts": {
         "test": "mocha"
@@ -25,10 +25,10 @@
         "art-template": "^4.12.1",
         "gulp-util": "3.0.8",
         "object-assign": "^4.1.0",
-        "safe-buffer": "^5.0.1",
         "through2": "2.0.3"
     },
     "devDependencies": {
+        "gulp": "^4.0.0",
         "mocha": "3.5.0",
         "should": "11.2.1",
         "standard": "^10.0.0"
@@ -40,7 +40,7 @@
     "licenses": [
         {
             "type": "MIT",
-            "url": "https://github.com/rogeriopvl/gulp-ejs/blob/master/LICENSE"
+            "url": "https://github.com/chenxxzhe/gulp-art-template/blob/master/LICENSE"
         }
     ]
 }

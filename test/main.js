@@ -15,7 +15,6 @@ function compare(stream, compareFile, done) {
     stream.on('data', function(newFile) {
         should.exist(newFile)
         should.exist(newFile.contents)
-
         String(newFile.contents).should.equal(String(compareFile.contents))
         done()
     })
@@ -27,6 +26,13 @@ describe('gulp-art-template', function() {
         cwd: __dirname,
         base: path.join(__dirname, 'expected'),
         contents: fs.readFileSync(path.join(__dirname, 'expected', 'data.html'))
+    });
+
+    var expectedExtendedFile = new gutil.File({
+        path: path.join(__dirname, 'expected', 'sub.html'),
+        cwd: __dirname,
+        base: path.join(__dirname, 'expected'),
+        contents: fs.readFileSync(path.join(__dirname, 'expected', 'sub.html'))
     });
 
     it('Test render datas', function(done) {
@@ -47,6 +53,23 @@ describe('gulp-art-template', function() {
 
         stream.end()
     });
+
+    it('Test extend data', function(done) {
+        var srcFile = new gutil.File({
+            path: path.join(__dirname, 'templates', 'sub.art'),
+            cwd: __dirname,
+            base: path.join(__dirname, 'templates'),
+            contents: fs.readFileSync(path.join(__dirname, 'templates', 'sub.art'))
+        })
+
+        var stream = template()
+
+        compare(stream, expectedExtendedFile, done)
+
+        stream.write(srcFile)
+
+        stream.end()
+    })
 
     it('Test include template', function(done) {
         var srcFile = new gutil.File({

@@ -1,5 +1,5 @@
 # gulp-art-template4
-A plugin for Gulp that parses art-template template files
+A plugin for Gulp that parses art-template template files, forked from https://github.com/zqjimlove/gulp-art-template
 
 
 ## install
@@ -34,6 +34,11 @@ tempalte(data,options,settings)
 
 Type: Object Default: {}
 
+enhance art-template extend data (**only for origin rule**):  `extend` expression can use JSON string as second params
+```
+<% extend('layout.art', { "title": "art", "page": 1 })%>
+```
+
 #### options
 
 Type: Object Default: {}
@@ -49,6 +54,8 @@ A object to configure the plugin.
 ```
 {
 	ext:String // Defines the file extension that will be appended to the filename. If no extension is provided, the same extension of the input file will be used.
+	originRule: RegExp // override default origin parsing rule
+	standardRule: RegExp // override default standard parsing rule
 }
 ```
 
