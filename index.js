@@ -6,7 +6,10 @@ var assign = require('object-assign');
 
 var PLUGIN_NAME = 'gulp-arttemplate'
 
+// 原始语法 解析 extend data
 var extendDataReg = /extend\(.*,\s*(\{.*\})\s*\)/
+// 标准语法 解析 extend data
+var standardExtendDataReg = /extend.*\s*(\{.*\})\s*/
 
 
 /**
@@ -18,9 +21,12 @@ var extendDataReg = /extend\(.*,\s*(\{.*\})\s*\)/
 function getExtendData(expression) {
     if (!expression) return null
     try {
-        var matcher = expression.match(extendDataReg)
+        var matcher = expression.match(extendDataReg) 
+        var matcherStandard = expression.match(standardExtendDataReg)
         if (matcher && matcher[1]) {
             return JSON.parse(matcher[1])
+        } else if (matcherStandard && matcherStandard[1]) {
+            return JSON.parse(matcherStandard[1])
         }
     } catch(err) {
         console.log(err)
