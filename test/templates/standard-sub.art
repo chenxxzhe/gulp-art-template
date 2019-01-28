@@ -1,0 +1,7 @@
+{{% extend './layout.art', { "title": "产品列表" } %}}
+
+{{% block 'subProduct' %}}
+<ul>
+  <li>product</li>
+</ul>
+{{% /block %}}

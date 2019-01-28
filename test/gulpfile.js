@@ -3,7 +3,7 @@ const art = require('../index')
 
 
 gulp.task('default', function() {
-  return gulp.src('./templates/sub.art')
+  return gulp.src('./templates/*sub.art')
     .pipe(art({}, {
       debug: true
     }, {
