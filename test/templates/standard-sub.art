@@ -1,4 +1,4 @@
-{{% extend './layout.art', { "title": "产品列表" } %}}
+{{% extend './layout.art', { "title": "产品列表", "showName": true } %}}
 
 {{% block 'subProduct' %}}
 <ul>

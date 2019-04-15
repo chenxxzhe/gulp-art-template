@@ -19,7 +19,7 @@
         "url": "https://github.com/chenxxzhe/gulp-art-template"
     },
     "scripts": {
-        "test": "mocha"
+        "test": "gulp --gulpfile ./test/gulpfile.js && mocha"
     },
     "dependencies": {
         "art-template": "^4.12.1",

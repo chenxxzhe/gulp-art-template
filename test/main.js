@@ -6,6 +6,7 @@ require('mocha')
 var gutil = require('gulp-util')
 var template = require('../');
 
+const templateSetting = require("./gulpfile").customSetting
 
 function compare(stream, compareFile, done) {
     stream.on('error', function(err) {
@@ -20,22 +21,29 @@ function compare(stream, compareFile, done) {
     })
 }
 
+var expectedDataFile = new gutil.File({
+    path: path.join(__dirname, 'expected', 'data.html'),
+    cwd: __dirname,
+    base: path.join(__dirname, 'expected'),
+    contents: fs.readFileSync(path.join(__dirname, 'expected', 'data.html'))
+});
+var expectedIncludeFile = new gutil.File({
+    path: path.join(__dirname, 'expected', 'include.html'),
+    cwd: __dirname,
+    base: path.join(__dirname, 'expected'),
+    contents: fs.readFileSync(path.join(__dirname, 'expected', 'include.html'))
+});
+
+var expectedExtendedFile = new gutil.File({
+    path: path.join(__dirname, 'expected', 'sub.html'),
+    cwd: __dirname,
+    base: path.join(__dirname, 'expected'),
+    contents: fs.readFileSync(path.join(__dirname, 'expected', 'sub.html'))
+});
+
 describe('gulp-art-template', function() {
-    var expectedDataFile = new gutil.File({
-        path: path.join(__dirname, 'expected', 'data.html'),
-        cwd: __dirname,
-        base: path.join(__dirname, 'expected'),
-        contents: fs.readFileSync(path.join(__dirname, 'expected', 'data.html'))
-    });
 
-    var expectedExtendedFile = new gutil.File({
-        path: path.join(__dirname, 'expected', 'sub.html'),
-        cwd: __dirname,
-        base: path.join(__dirname, 'expected'),
-        contents: fs.readFileSync(path.join(__dirname, 'expected', 'sub.html'))
-    });
-
-    it('Test render datas', function(done) {
+    it('Test render data', function(done) {
         var srcFile = new gutil.File({
             path: path.join(__dirname, 'templates', 'data.art'),
             cwd: __dirname,
@@ -43,7 +51,9 @@ describe('gulp-art-template', function() {
             contents: fs.readFileSync(path.join(__dirname, 'templates', 'data.art'))
         })
 
-        var stream = template({ title: 'gulp-art-template' });
+        var stream = template({
+            title: 'gulp-art-template'
+        })
 
 
         compare(stream, expectedDataFile, done);
@@ -53,6 +63,26 @@ describe('gulp-art-template', function() {
 
         stream.end()
     });
+
+    /** FIXME: 如果这个测试排在 test extend data 编译不出来，报错 */
+    it('Test include template', function(done) {
+        var srcFile = new gutil.File({
+            path: path.join(__dirname, 'templates', 'include.art'),
+            cwd: __dirname,
+            base: path.join(__dirname, 'templates'),
+            contents: fs.readFileSync(path.join(__dirname, 'templates', 'include.art'))
+        })
+
+        var stream = template({
+            title: 'test-include'
+        })
+
+        compare(stream, expectedIncludeFile, done);
+
+        stream.write(srcFile)
+
+        stream.end()
+    })
 
     it('Test extend data', function(done) {
         var srcFile = new gutil.File({
@@ -62,7 +92,7 @@ describe('gulp-art-template', function() {
             contents: fs.readFileSync(path.join(__dirname, 'templates', 'sub.art'))
         })
 
-        var stream = template()
+        var stream = template({}, {}, templateSetting)
 
         compare(stream, expectedExtendedFile, done)
 
@@ -70,23 +100,6 @@ describe('gulp-art-template', function() {
 
         stream.end()
     })
-
-    it('Test include template', function(done) {
-        var srcFile = new gutil.File({
-            path: path.join(__dirname, 'templates', 'include.art'),
-            cwd: __dirname,
-            base: path.join(__dirname, 'templates'),
-            contents: fs.readFileSync(path.join(__dirname, 'templates', 'include.art'))
-        })
-
-        var stream = template({ title: 'gulp-art-template' });
-
-        compare(stream, expectedDataFile, done);
-
-        stream.write(srcFile)
-
-        stream.end()
-    });
 
     it('Test config ext', function() {
         var srcFile = new gutil.File({
@@ -96,13 +109,14 @@ describe('gulp-art-template', function() {
             contents: fs.readFileSync(path.join(__dirname, 'templates', 'include.art'))
         })
 
-        var stream = template({ title: 'gulp-art-template' }, {}, {
-            ext: '.html'
-        });
+        var stream = template({
+            title: 'gulp-art-template'
+        }, {}, {ext: '.tml'});
 
 
         stream.write(srcFile)
-        String(path.extname(srcFile.path)).should.equal('.html');
+        String(path.extname(srcFile.path)).should.equal('.tml');
         stream.end()
     });
+    
 })

@@ -34,8 +34,8 @@ function getExtendData(expression) {
     }
 }
 
-module.exports = function(data, options, settings) {
-    data = data || {};
+module.exports = function(rawData, options, settings) {
+    let data = Object.assign({}, rawData || {})
     options = assign({
         minimize: false,
         cache: false,
@@ -64,7 +64,7 @@ module.exports = function(data, options, settings) {
             );
         }
 
-        data = assign({}, data, file.data);
+        let dataClone = assign({}, data, file.data);
         options.filename = file.path;
 
         // extend 可以接收第二个参数作为 data
@@ -77,19 +77,17 @@ module.exports = function(data, options, settings) {
                 if (isDebug) console.log('extend expression:', matcher[3])
                 var extendData = getExtendData(matcher[3])
                 if (extendData) { 
-                    data = assign({}, data, extendData)
+                    dataClone = assign({}, dataClone, extendData)
                     break
                 }
             }
         }
-        if (isDebug) console.log('render data', JSON.stringify(data))
+        if (isDebug) console.log('render data', JSON.stringify(dataClone))
         try {
             file.contents = Buffer.from(
-                template.render(contents, data, options)
+                template.render(contents, dataClone, options)
             );
-            if(typeof settings.ext !== 'undefined') {
-                file.path = gutil.replaceExtension(file.path, settings.ext);
-            }
+            file.path = gutil.replaceExtension(file.path, settings.ext || '.html');
         } catch(err) {
             console.log(err)
             this.emit('error', new gutil.PluginError(PLUGIN_NAME, err.toString()))

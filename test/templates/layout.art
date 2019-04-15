@@ -2,6 +2,9 @@
   <h1><%= title %></h1>
   <% block('subProduct', function(){ %>
   <% }) %>
+  <% if (showName) { %>
+  <div>chenzhe</div>
+  <% } %>
 </div>
 
 
