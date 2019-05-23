@@ -46,8 +46,17 @@ module.exports = function(rawData, options, settings) {
     }, options);
     settings = settings || {};
     var rules = template.defaults.rules
-    rules[0].test = settings.originRule || rules[0].test
-    rules[1].test = settings.standardRule || rules[1].test
+    const oldOriginRule = rules[0].test
+    const oldStandardRule = rules[1].test
+    // 注意要恢复原来的，不然会影响后续
+    const overrideRule = () => {
+        rules[0].test = settings.originRule || oldOriginRule
+        rules[1].test = settings.standardRule || oldStandardRule
+    }
+    const resetRule = () => {
+        rules[0].test = oldOriginRule
+        rules[1].test = oldStandardRule
+    }
 
     var isDebug = options.debug
 
@@ -83,6 +92,7 @@ module.exports = function(rawData, options, settings) {
             }
         }
         if (isDebug) console.log('render data', JSON.stringify(dataClone))
+        overrideRule()
         try {
             file.contents = Buffer.from(
                 template.render(contents, dataClone, options)
@@ -91,6 +101,8 @@ module.exports = function(rawData, options, settings) {
         } catch(err) {
             console.log(err)
             this.emit('error', new gutil.PluginError(PLUGIN_NAME, err.toString()))
+        } finally {
+            resetRule()
         }
 
         this.push(file);
